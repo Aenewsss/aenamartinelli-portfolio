@@ -1,112 +1,87 @@
+'use client'
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline"
 
 export default function Home() {
+
+  const ref1 = useRef<HTMLImageElement>(null)
+  const ref2 = useRef<HTMLImageElement>(null)
+  const ref3 = useRef<HTMLImageElement>(null)
+
+  const prevIconRef = useRef<SVGSVGElement>(null)
+  const nextIconRef = useRef<SVGSVGElement>(null)
+
+  useEffect(() => {
+    function clickListener(this: HTMLElement, event: any) {
+      document.querySelectorAll('.section-active').forEach(el => {
+        if (el != event.currentTarget) {
+          el.classList.remove('section-active')
+        }
+      })
+
+      event.currentTarget.classList.add('section-active')
+    }
+
+    ref1.current?.addEventListener('click', clickListener)
+    ref2.current?.addEventListener('click', clickListener)
+    ref3.current?.addEventListener('click', clickListener)
+  }, []);
+
+  let deg = 0
+
+  function prevSection() {
+    const sections = getSections()
+
+    deg += 90
+
+    prevIconRef.current!.style.transform = `rotate(-${deg}deg)`
+    nextIconRef.current!.style.transform = `rotate(-${deg}deg)`
+
+    if (sections[0].classList.contains('section-active')) {
+      sections[0].classList.remove('section-active')
+      sections[sections.length - 1].classList.add('section-active')
+      return
+    }
+
+    const index = Array.from(sections).findIndex(el => el.classList.contains('section-active'))
+
+    sections[index].classList.remove('section-active')
+    sections[index - 1].classList.add('section-active')
+  }
+
+  function nextSection() {
+    const sections = getSections()
+
+    deg += 90
+    
+    prevIconRef.current!.style.transform = `rotate(${deg}deg)`
+    nextIconRef.current!.style.transform = `rotate(${deg}deg)`
+    
+    if (sections[sections.length - 1].classList.contains('section-active')) {
+      sections[sections.length - 1].classList.remove('section-active')
+      sections[0].classList.add('section-active')
+      return
+    }
+
+    const index = Array.from(sections).findIndex(el => el.classList.contains('section-active'))
+
+    sections[index].classList.remove('section-active')
+    sections[index + 1].classList.add('section-active')
+  }
+
+  const getSections = () => document.querySelectorAll('.section')
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    <main>
+      <section className="container mx-auto relative flex items-center justify-center h-screen">
+        <PlusIcon ref={prevIconRef} onClick={prevSection} width={40} height={40} className="absolute z-20 cursor-pointer ease-linear duration-200 left-10" />
+        <PlusIcon ref={nextIconRef} onClick={nextSection} width={40} height={40} className="absolute z-20 cursor-pointer ease-linear duration-200 right-10" />
+      </section>
+      <div className="fixed flex gap-8 bottom-20 right-10">
+        <Image draggable={false} ref={ref1} unoptimized className="section section-active z-20 cursor-pointer hover:scale-105 hover:shadow-[6px_6px_10px_0_rgba(255,255,255,0.4)] ease-in duration-200 rounded-md object-cover h-[200px]" src="/initial.jpg" width={120} height={200} alt="section 1" />
+        <Image draggable={false} ref={ref2} unoptimized className="section z-20 cursor-pointer hover:scale-105 hover:shadow-[6px_6px_10px_0_rgba(255,255,255,0.4)] ease-in duration-200 rounded-md object-cover h-[200px]" src="/about.jpg" width={120} height={200} alt="section 1" />
+        <Image draggable={false} ref={ref3} unoptimized className="section z-20 cursor-pointer hover:scale-105 hover:shadow-[6px_6px_10px_0_rgba(255,255,255,0.4)] ease-in duration-200 rounded-md object-cover h-[200px]" src="/projects.jpg" width={120} height={200} alt="section 1" />
       </div>
     </main>
   );
