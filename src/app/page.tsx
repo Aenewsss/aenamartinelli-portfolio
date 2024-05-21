@@ -1,88 +1,108 @@
 'use client'
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline"
+import CardsSection from "./components/cards-section";
+import PresentationSection from "./sections/presentation";
+import StackSection from "./sections/stack";
+import ProjectsSection from "./sections/projects";
+import ContactSection from "./sections/contact";
 
 export default function Home() {
 
-  const ref1 = useRef<HTMLImageElement>(null)
-  const ref2 = useRef<HTMLImageElement>(null)
-  const ref3 = useRef<HTMLImageElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevIconRef = useRef<SVGSVGElement>(null)
   const nextIconRef = useRef<SVGSVGElement>(null)
 
-  useEffect(() => {
-    function clickListener(this: HTMLElement, event: any) {
-      document.querySelectorAll('.section-active').forEach(el => {
-        if (el != event.currentTarget) {
-          el.classList.remove('section-active')
-        }
-      })
+  const imageContainerRef = useRef<HTMLElement>(null);
 
-      event.currentTarget.classList.add('section-active')
-    }
+  const listRef = useRef<HTMLUListElement>(null);
 
-    ref1.current?.addEventListener('click', clickListener)
-    ref2.current?.addEventListener('click', clickListener)
-    ref3.current?.addEventListener('click', clickListener)
-  }, []);
+  const getIconDeg = () => Number(prevIconRef.current?.style.transform.replace('rotate(', '').replace('deg)', ''))
 
-  let deg = 0
+  const getImageContainerTranslateX = () => Number(imageContainerRef.current?.style.transform.replace('translateX(', '').replace('px)', ''))
+
+  const getListTranslateY = () => Number(listRef.current?.style.transform.replace('translateY(', '').replace('px)', ''))
 
   function prevSection() {
-    const sections = getSections()
+    if (currentIndex == 0) return
 
-    deg += 90
+    const deg = getIconDeg() - 90
 
-    prevIconRef.current!.style.transform = `rotate(-${deg}deg)`
-    nextIconRef.current!.style.transform = `rotate(-${deg}deg)`
+    prevIconRef.current!.style.transform = `rotate(${deg}deg)`
+    nextIconRef.current!.style.transform = `rotate(${deg}deg)`
 
-    if (sections[0].classList.contains('section-active')) {
-      sections[0].classList.remove('section-active')
-      sections[sections.length - 1].classList.add('section-active')
-      return
-    }
+    setCurrentIndex(currentIndex - 1)
 
-    const index = Array.from(sections).findIndex(el => el.classList.contains('section-active'))
+    const containerWidth = imageContainerRef.current?.clientWidth!;
 
-    sections[index].classList.remove('section-active')
-    sections[index - 1].classList.add('section-active')
+    const translateX = getImageContainerTranslateX() + containerWidth
+    imageContainerRef.current!.style.transform = `translateX(${translateX}px)`;
+
+    const translateY = getListTranslateY() + 28
+    listRef.current!.style.transform = `translateY(${translateY}px)`;
   }
 
   function nextSection() {
-    const sections = getSections()
+    if (currentIndex == 3) return
 
-    deg += 90
-    
+    const deg = getIconDeg() + 90
+
     prevIconRef.current!.style.transform = `rotate(${deg}deg)`
     nextIconRef.current!.style.transform = `rotate(${deg}deg)`
-    
-    if (sections[sections.length - 1].classList.contains('section-active')) {
-      sections[sections.length - 1].classList.remove('section-active')
-      sections[0].classList.add('section-active')
-      return
-    }
 
-    const index = Array.from(sections).findIndex(el => el.classList.contains('section-active'))
+    setCurrentIndex(currentIndex + 1)
 
-    sections[index].classList.remove('section-active')
-    sections[index + 1].classList.add('section-active')
+    const containerWidth = imageContainerRef.current?.clientWidth!;
+
+    const translateX = getImageContainerTranslateX() ? getImageContainerTranslateX() - containerWidth : -containerWidth
+
+    imageContainerRef.current!.style.transform = `translateX(${translateX}px)`;
+
+    const translateY = getListTranslateY() ? getListTranslateY() - 28 : -28
+    listRef.current!.style.transform = `translateY(${translateY}px)`;
+
   }
 
-  const getSections = () => document.querySelectorAll('.section')
+  function renderSection() {
+    switch (currentIndex) {
+      case 0: return <PresentationSection />
+      case 1: return <StackSection />
+      case 2: return <ProjectsSection />
+      case 3: return <ContactSection />
+    }
+  }
+
 
   return (
-    <main>
-      <section className="container mx-auto relative flex items-center justify-center h-screen">
-        <PlusIcon ref={prevIconRef} onClick={prevSection} width={40} height={40} className="absolute z-20 cursor-pointer ease-linear duration-200 left-10" />
-        <PlusIcon ref={nextIconRef} onClick={nextSection} width={40} height={40} className="absolute z-20 cursor-pointer ease-linear duration-200 right-10" />
+    <main className="flex justify-center">
+      <section className={`absolute w-screen h-screen flex transition-transform duration-500`} ref={imageContainerRef}>
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/initial.jpg" alt="Imagem de fundo 1" width={300} height={300} />
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/stack.jpg" alt="Imagem de fundo 2" width={300} height={300} />
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/projects.jpg" alt="Imagem de fundo 3" width={300} height={300} />
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/contact.jpg" alt="Imagem de fundo 4" width={300} height={300} />
       </section>
-      <div className="fixed flex gap-8 bottom-20 right-10">
-        <Image draggable={false} ref={ref1} unoptimized className="section section-active z-20 cursor-pointer hover:scale-105 hover:shadow-[6px_6px_10px_0_rgba(255,255,255,0.4)] ease-in duration-200 rounded-md object-cover h-[200px]" src="/initial.jpg" width={120} height={200} alt="section 1" />
-        <Image draggable={false} ref={ref2} unoptimized className="section z-20 cursor-pointer hover:scale-105 hover:shadow-[6px_6px_10px_0_rgba(255,255,255,0.4)] ease-in duration-200 rounded-md object-cover h-[200px]" src="/about.jpg" width={120} height={200} alt="section 1" />
-        <Image draggable={false} ref={ref3} unoptimized className="section z-20 cursor-pointer hover:scale-105 hover:shadow-[6px_6px_10px_0_rgba(255,255,255,0.4)] ease-in duration-200 rounded-md object-cover h-[200px]" src="/projects.jpg" width={120} height={200} alt="section 1" />
+
+      <section className="container mx-auto relative flex items-center justify-center h-screen">
+        <PlusIcon ref={prevIconRef} onClick={prevSection} width={50} height={50} className="absolute z-20 cursor-pointer ease-linear duration-200 left-0" />
+        <PlusIcon ref={nextIconRef} onClick={nextSection} width={50} height={50} className="absolute z-20 cursor-pointer ease-linear duration-200 right-0" />
+        {renderSection()}
+      </section>
+
+      <Image unoptimized className="md:w-[60px] w-8 fixed top-4 left-4" src="/icons/my-logo.png" width={60} height={60} alt="Minha logo" />
+      <Image unoptimized className="md:w-[60px] w-8 fixed bottom-4 right-4" src="/icons/my-logo.png" width={60} height={60} alt="Minha logo" />
+
+      <div className="fixed bottom-10 overflow-hidden flex h-6">
+        <ul ref={listRef} className="md:text-xl text-lg list-none transition-transform duration-1000">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+        </ul>
+        <h3 className="md:text-xl text-lg">&nbsp;-&nbsp;4</h3>
       </div>
+
     </main>
   );
 }

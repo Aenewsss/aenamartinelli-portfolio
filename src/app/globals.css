@@ -22,23 +22,49 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  overflow-x: hidden;
 }
 
-.section-active {
-  @apply w-screen h-screen fixed right-0 bottom-0 z-10 cursor-auto;
-  /* animation: opacity 2s ease forwards; */
+.animation-fade-in {
+  animation: fade-in .5s ease-in forwards;
 }
 
-.section-active:hover {
-  transform: none !important;
+.animation-to-top {
+  animation: to-top .8s ease-in forwards;
 }
 
-@keyframes opacity {
+.animation-delay-1 {
+  animation-delay: .5s;
+}
+.animation-delay-2 {
+  animation-delay: 1s;
+}
+.animation-delay-3 {
+  animation-delay: 1.5s;
+}
+.animation-delay-4 {
+  animation-delay: 2s;
+}
+.animation-delay-5 {
+  animation-delay: 2.5s;
+}
+.animation-delay-6 {
+  animation-delay: 3s;
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes to-top {
   from {
+    transform: translateY(20px);
     opacity: 0;
   }
-
   to {
+    transform: translateY(0);
     opacity: 1;
   }
 }
