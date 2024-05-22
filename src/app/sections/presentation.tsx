@@ -10,7 +10,7 @@ export default function PresentationSection() {
             </div>
             <Image
                 unoptimized
-                src="/me.png"
+                src="/me.webp"
                 width={300}
                 height={300}
                 className="rounded-full mb-4 object-cover animation-to-top delay-200"

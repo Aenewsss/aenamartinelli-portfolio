@@ -78,9 +78,9 @@ export default function Home() {
     <main className="flex justify-center">
       <section className={`absolute w-screen h-screen flex transition-transform duration-500`} ref={imageContainerRef}>
         <Image priority className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/initial.webp" alt="Imagem de fundo 1" width={300} height={300} />
-        <Image priority className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/stack.webp" alt="Imagem de fundo 2" width={300} height={300} />
-        <Image priority className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/projects.webp" alt="Imagem de fundo 3" width={300} height={300} />
-        <Image priority className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/contact.webp" alt="Imagem de fundo 4" width={300} height={300} />
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/stack.webp" alt="Imagem de fundo 2" width={300} height={300} />
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/projects.webp" alt="Imagem de fundo 3" width={300} height={300} />
+        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/contact.webp" alt="Imagem de fundo 4" width={300} height={300} />
       </section>
 
       <section className="container mx-auto relative flex items-center justify-center h-screen">
