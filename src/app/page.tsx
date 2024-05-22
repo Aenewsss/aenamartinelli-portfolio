@@ -1,8 +1,7 @@
 'use client'
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline"
-import CardsSection from "./components/cards-section";
 import PresentationSection from "./sections/presentation";
 import StackSection from "./sections/stack";
 import ProjectsSection from "./sections/projects";
