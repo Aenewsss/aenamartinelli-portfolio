@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="shortcut icon" href="/icons/my-logo.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="/icons/my-logo.webp" type="image/x-icon" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

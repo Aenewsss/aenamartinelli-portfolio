@@ -8,8 +8,8 @@ export default function StackSection() {
                 <p className="md:text-xl text-lg animation-to-top ">Essas são as tecnologias que uso no meu dia a dia e/ou tenho afinidade</p>
             </div>
             <div className="flex flex-wrap md:gap-8 gap-4 justify-center">
-                <div className="animation-to-top opacity-0 cursor-pointer transition-all hover:translate-y-[-4px] hover:scale-110 group relative flex justify-center">
-                    <Image className="md:w-[60px] w-8" src="/stacks/angularjs-svgrepo-com.svg" width={60} height={60} alt="" />
+                <div className="animation-to-top opacity-0 cursor-pointer transition-all group relative flex justify-center">
+                    <Image className="md:w-[60px] w-8 group-hover:translate-y-[-4px] group-hover:scale-110" src="/stacks/angularjs-svgrepo-com.svg" width={60} height={60} alt="" />
                     <span className="-bottom-6 absolute opacity-0 group-hover:opacity-100 transition-all">angularjs</span>
                 </div>
                 <div className="animation-to-top animation-delay-1 opacity-0 cursor-pointer transition-all hover:translate-y-[-4px] hover:scale-110 group relative flex justify-center">
