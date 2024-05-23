@@ -11,7 +11,7 @@ export default function ProjectsSection() {
         divRef.current!.style.transform = 'translateY(0)'
         setTimeout(() => {
             router.push('/projects')
-        }, 1000);
+        }, 900);
     }
     
     return (

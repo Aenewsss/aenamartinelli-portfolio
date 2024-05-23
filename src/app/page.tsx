@@ -77,10 +77,10 @@ export default function Home() {
   return (
     <main className="flex justify-center">
       <section className={`absolute w-screen h-screen flex transition-transform duration-500`} ref={imageContainerRef}>
-        <Image priority className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/initial.webp" alt="Imagem de fundo 1" width={300} height={300} />
-        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/stack.webp" alt="Imagem de fundo 2" width={300} height={300} />
-        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/projects.webp" alt="Imagem de fundo 3" width={300} height={300} />
-        <Image className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/contact.webp" alt="Imagem de fundo 4" width={300} height={300} />
+        <Image sizes="100vw" priority className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/initial.webp" alt="Imagem de fundo 1" width={300} height={300} />
+        <Image sizes="100vw" className={`object-cover flex-shrink-0 w-full h-full opacity-50 transition duration-500 ease-in-out`} unoptimized src="/stack.webp" alt="Imagem de fundo 2" width={300} height={300} />
+        <Image sizes="100vw" className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/projects.webp" alt="Imagem de fundo 3" width={300} height={300} />
+        <Image sizes="100vw" className={`object-cover flex-shrink-0 w-full h-full opacity-40 transition duration-500 ease-in-out`} unoptimized src="/contact.webp" alt="Imagem de fundo 4" width={300} height={300} />
       </section>
 
       <section className="container mx-auto relative flex items-center justify-center h-screen">
@@ -89,8 +89,8 @@ export default function Home() {
         {renderSection()}
       </section>
 
-      <Image unoptimized className="md:w-[60px] w-8 fixed top-4 left-4" src="/icons/my-logo.png" width={60} height={60} alt="Minha logo" />
-      <Image unoptimized className="md:w-[60px] w-8 fixed bottom-4 right-4" src="/icons/my-logo.png" width={60} height={60} alt="Minha logo" />
+      <Image unoptimized className="md:w-[60px] w-8 fixed top-4 left-4" src="/icons/my-logo.webp" width={60} height={60} alt="Minha logo" />
+      <Image unoptimized className="md:w-[60px] w-8 fixed bottom-4 right-4" src="/icons/my-logo.webp" width={60} height={60} alt="Minha logo" />
 
       <div className="fixed bottom-10 overflow-hidden flex h-6">
         <ul ref={listRef} className="md:text-xl text-lg list-none transition-transform duration-1000">
