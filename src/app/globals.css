@@ -31,13 +31,8 @@ body {
   position: relative;
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-amber-400 rounded-lg;
-}
-
 ::-webkit-scrollbar{
-  background-color: black;
-  width: 4px;
+  width: 0;
 }
 
 .animation-fade-in {
@@ -142,11 +137,23 @@ body {
 }
 
 .zoom-project{
-  @apply w-screen h-screen z-10 overflow-hidden;
+  @apply w-screen z-10 overflow-hidden;
 }
 
 .zoom-project img {
-  @apply scale-100 opacity-100 hover:scale-100;
+  @apply scale-100 hover:scale-100 hover:opacity-70 cursor-auto;
+}
+
+.scroll-animated{
+  scale: 0 1;
+  animation: scroll-watcher linear;
+  animation-timeline: scroll(y);
+}
+
+@keyframes scroll-watcher {
+    to{
+      scale: 1 1;
+    }
 }
 
 @keyframes fade-in {
